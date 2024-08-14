@@ -7,6 +7,5 @@ namespace MotorRental.Application.Interfaces
     public interface IDeliverDriverService : IBaseService<DeliverDriver>
     {
         Task<ApiResponse> UploadLicenseDriverPhotoAsync(UploadLicenseDriverPhotoDto uploadLicenseDriverPhotoDto, string userEmail);
-
     }
 }

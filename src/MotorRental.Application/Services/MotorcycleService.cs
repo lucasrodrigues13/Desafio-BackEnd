@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using MotorRental.Application.Interfaces;
+﻿using MotorRental.Application.Interfaces;
 using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
 using MotorRental.Domain.Entities;
@@ -46,7 +45,7 @@ namespace MotorRental.Application.Services
             _messagingService.SendMessage(RabbitMqConstants.MOTORCYCLE_NOTIFICATION_QUEUE_NAME, JsonConvert.SerializeObject(motorcycle));
         }
 
-        public async Task UpdateLicensePlate(UpdateLicensePlateRequest updateLicensePlateRequest)
+        public async Task UpdateLicensePlate(UpdateLicensePlateDto updateLicensePlateRequest)
         {
             var motorcycle = await GetByIdAsync(updateLicensePlateRequest.MotorcycleId);
             if (motorcycle != null)

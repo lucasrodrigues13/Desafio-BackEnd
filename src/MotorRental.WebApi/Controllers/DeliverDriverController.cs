@@ -21,8 +21,8 @@ namespace MotorRental.WebApi.Controllers
         [HttpPost("UploadLicenseDriverPhoto")]
         public async Task<IActionResult> UploadLicenseDriverPhoto(UploadLicenseDriverPhotoDto uploadLicenseDriverPhotoDto)
         {
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            var apiResponse = await _driverService.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "flucasrodrigues@hotmail.com");
+            //var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var apiResponse = await _driverService.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "test@email.com.br");
 
             if (!apiResponse.Success)
                 return BadRequest(apiResponse);

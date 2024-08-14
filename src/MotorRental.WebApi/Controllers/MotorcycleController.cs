@@ -29,13 +29,17 @@ namespace MotorRental.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MotorcycleDto motorcycleDto)
         {
+            var teste = ModelBinderFactory;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             await _motorcycleService.AddMotorcycle(motorcycleDto);
 
             return Ok();
         }
 
         [HttpPatch("UpdateLicensePlate")]
-        public async Task<IActionResult> UpdateLicensePlate(UpdateLicensePlateRequest updateLicensePlateRequest)
+        public async Task<IActionResult> UpdateLicensePlate(UpdateLicensePlateDto updateLicensePlateRequest)
         {
             await _motorcycleService.UpdateLicensePlate(updateLicensePlateRequest);
 
