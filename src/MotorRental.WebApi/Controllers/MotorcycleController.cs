@@ -16,9 +16,9 @@ namespace MotorRental.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll([FromQuery] GetMotorcyclesFilterDto getMotorcyclesFilterDto)
+        public async Task<IActionResult> GetAll([FromQuery] GetMotorcyclesFilterDto getMotorcyclesFilterDto)
         {
-            var motorcycles = _motorcycleService.Get(getMotorcyclesFilterDto);
+            var motorcycles = await _motorcycleService.Get(getMotorcyclesFilterDto);
 
             if (!motorcycles.Any())
                 return NoContent();

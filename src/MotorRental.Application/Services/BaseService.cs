@@ -20,11 +20,6 @@ namespace MotorRental.Application.Services
             await _repository.DeleteByIdAsync(id);
         }
 
-        public IQueryable<T> GetAll()
-        {
-            return _repository.GetAll();
-        }
-
         public async Task<T?> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);

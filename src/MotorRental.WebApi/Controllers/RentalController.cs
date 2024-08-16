@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application.Interfaces;
-using MotorRental.Domain.Dtos;
-using MotorRental.Domain.Entities;
 
 namespace MotorRental.WebApi.Controllers
 {
@@ -16,9 +14,10 @@ namespace MotorRental.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var rentals = _rentalService.GetAll().ToList();
+            var rentals = await _rentalService.Get();
+
             if (!rentals.Any())
                 return NoContent();
 

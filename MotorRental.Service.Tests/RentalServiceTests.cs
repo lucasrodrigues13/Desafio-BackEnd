@@ -58,14 +58,11 @@ namespace MotorRental.Application.Tests
         [InlineData(1, 1, 0)]
         public async Task RentAMotorcycle_Should_Return_BadRequest_When_Some_Entity_Not_Found(int motorcycleId, int deliverDriverId, int planId)
         {
-            // Arrange
             var rentDto = new RentAMotorcycleDto { MotorcycleId = motorcycleId, DeliverDriverId = deliverDriverId, PlanId = planId };
             _motorcycleRepositoryMock.Setup(r => r.GetByIdAsync(rentDto.MotorcycleId)).ReturnsAsync((Motorcycle?)null);
 
-            // Act
             var result = await _rentalService.RentAMotorcycle(rentDto);
 
-            // Assert
             Assert.False(result.Success);
             Assert.Contains(ErrorMessagesConstants.NO_MOTORCYCLE_AVAILABLE, result.Errors);
         }

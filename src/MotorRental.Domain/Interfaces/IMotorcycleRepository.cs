@@ -1,9 +1,10 @@
-﻿using MotorRental.Domain.Entities;
+﻿using MotorRental.Domain.Dtos;
+using MotorRental.Domain.Entities;
 
 namespace MotorRental.Domain.Interfaces
 {
     public interface IMotorcycleRepository : IBaseRepository<Motorcycle>
     {
-        Motorcycle? GetNextAvailableMotorcycle();
+        Task<List<MotorcycleDto>> GetByLicensePlate(string licensePlate);
     }
 }

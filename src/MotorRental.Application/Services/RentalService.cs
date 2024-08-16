@@ -64,6 +64,11 @@ namespace MotorRental.Application.Services
             return ApiResponse.Ok(rental);
         }
 
+        public async Task<List<RentalDto>> Get()
+        {
+            return await _rentalRepository.Get();
+        }
+
         private List<string> ValidRentAMotorcycle(RentAMotorcycleDto rentAMotorcycleDto, DeliverDriver deliverDriver, Motorcycle motorcycle, Plan plan)
         {
             var errors = new List<string>();

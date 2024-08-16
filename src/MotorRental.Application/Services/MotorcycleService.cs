@@ -17,20 +17,9 @@ namespace MotorRental.Application.Services
             _messagingService = messagingService;
         }
 
-        public IEnumerable<MotorcycleDto> Get(GetMotorcyclesFilterDto getMotorcyclesFilterDto)
+        public async Task<List<MotorcycleDto>> Get(GetMotorcyclesFilterDto getMotorcyclesFilterDto)
         {
-            var query = _motorcyleRepository.GetAll();
-
-            if (!string.IsNullOrEmpty(getMotorcyclesFilterDto.LicensePlate))
-                query = query.Where(a => a.LicensePlate.ToUpper().Contains(getMotorcyclesFilterDto.LicensePlate.ToUpper()));
-
-            return query.Select(a => new MotorcycleDto
-            {
-                Id = a.Id,
-                LicensePlate = a.LicensePlate,
-                Model = a.Model,
-                Year = a.Year
-            });
+            return await _motorcyleRepository.GetByLicensePlate(getMotorcyclesFilterDto.LicensePlate);
         }
 
         public async Task AddMotorcycle(MotorcycleDto motorcycleDto)

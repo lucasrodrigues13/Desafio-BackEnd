@@ -34,6 +34,7 @@ namespace MotorRental.Infrastructure.Repositories
                 await SaveAsync();
             }
         }
+
         public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);

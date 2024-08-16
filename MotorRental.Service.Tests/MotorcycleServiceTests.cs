@@ -20,25 +20,22 @@ namespace MotorRental.Application.Tests
         }
 
         [Fact]
-        public void Get_Should_Return_Filtered_Motorcycles()
+        public async Task Get_Should_Return_Filtered_Motorcycles()
         {
-            // Arrange
-            var motorcycles = new List<Motorcycle>
+            var motorcycles = new List<MotorcycleDto>
             {
-                new Motorcycle { Id = 1, LicensePlate = "ABC123", Model = "Model1", Year = 2020 },
-                new Motorcycle { Id = 2, LicensePlate = "DEF456", Model = "Model2", Year = 2021 }
-            }.AsQueryable();
+                new MotorcycleDto { Id = 1, LicensePlate = "ABC1234", Model = "Model1", Year = 2020 },
+                new MotorcycleDto { Id = 2, LicensePlate = "ABC4564", Model = "Model2", Year = 2024 }
+            };
+            var filter = new GetMotorcyclesFilterDto { LicensePlate = "ABC" };
 
-            _motorcyleRepositoryMock.Setup(r => r.GetAll()).Returns(motorcycles);
+            _motorcyleRepositoryMock.Setup(r => r.GetByLicensePlate(filter.LicensePlate)).ReturnsAsync(motorcycles);
 
             var service = new MotorcycleService(_motorcyleRepositoryMock.Object, null);
 
-            var filter = new GetMotorcyclesFilterDto { LicensePlate = "ABC" };
 
-            // Act
-            var result = service.Get(filter);
+            var result = await service.Get(filter);
 
-            // Assert
             Assert.Single(result);
             Assert.Equal("ABC123", result.First().LicensePlate);
         }
@@ -46,44 +43,34 @@ namespace MotorRental.Application.Tests
         [Fact]
         public async Task Get_Should_Return_All_Motorcycles()
         {
-            var motorcycles = new List<Motorcycle>
-                {
-                    new Motorcycle
-                    {
-                        Id = 1,
-                        LicensePlate = "ABC1234",
-                        Model = "TIGER",
-                        Year = 2024
-                    },
-                    new Motorcycle
-                    {
-                        Id = 2,
-                        LicensePlate = "DEF1235",
-                        Model = "CG TITAN",
-                        Year = 2023
-                    },
-                };
-            _motorcyleRepositoryMock.Setup(a => a.GetAll()).Returns(motorcycles.AsQueryable);
+            var motorcycles = new List<MotorcycleDto>
+            {
+                new MotorcycleDto { Id = 1, LicensePlate = "ABC1234", Model = "Model1", Year = 2020 },
+                new MotorcycleDto { Id = 2, LicensePlate = "ABC4564", Model = "Model2", Year = 2024 }
+            };
+            var filter = new GetMotorcyclesFilterDto { LicensePlate = string.Empty };
+
+            _motorcyleRepositoryMock.Setup(r => r.GetByLicensePlate(filter.LicensePlate)).ReturnsAsync(motorcycles);
 
             var service = new MotorcycleService(_motorcyleRepositoryMock.Object, _messagingServiceMock.Object);
 
-            var result = service.GetAll().ToList();
+            var result = await service.Get(filter);
             Assert.IsType<List<Motorcycle>>(result);
             Assert.Equal(2, result.Count);
         }
 
         [Fact]
-        public void Get_Should_Return_Empty_When_No_Motorcycles_Match_Filter()
+        public async Task Get_Should_Return_Empty_When_No_Motorcycles_Match_Filter()
         {
-            var motorcycles = new List<Motorcycle>().AsQueryable();
+            var motorcycles = new List<MotorcycleDto>();
 
             var filter = new GetMotorcyclesFilterDto { LicensePlate = "ABC" };
 
-            _motorcyleRepositoryMock.Setup(r => r.GetAll()).Returns(motorcycles);
+            _motorcyleRepositoryMock.Setup(r => r.GetByLicensePlate(filter.LicensePlate)).ReturnsAsync(motorcycles);
 
             var service = new MotorcycleService(_motorcyleRepositoryMock.Object, null);
 
-            var result = service.Get(filter);
+            var result = await service.Get(filter);
 
             Assert.Empty(result);
         }
