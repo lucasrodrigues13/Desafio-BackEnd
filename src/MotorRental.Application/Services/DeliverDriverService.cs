@@ -12,7 +12,7 @@ namespace MotorRental.Application.Services
     {
         private readonly IAwsS3Service _awsS3Service;
         private readonly IDeliverDriverRepository _deliverDriverRepository;
-        public DeliverDriverService(IDeliverDriverRepository repository, IAwsS3Service awsS3Service, IDeliverDriverRepository deliverDriverRepository) : base(repository)
+        public DeliverDriverService(IAwsS3Service awsS3Service, IDeliverDriverRepository deliverDriverRepository) : base(deliverDriverRepository)
         {
             _awsS3Service = awsS3Service;
             _deliverDriverRepository = deliverDriverRepository;
@@ -37,7 +37,6 @@ namespace MotorRental.Application.Services
 
             return ApiResponse.Ok();
         }
-
         private List<string> ValidImage(IFormFile licenseDriverPhoto)
         {
             var errors = new List<string>();

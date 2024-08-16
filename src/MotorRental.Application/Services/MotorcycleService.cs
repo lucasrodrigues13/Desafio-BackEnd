@@ -9,9 +9,9 @@ namespace MotorRental.Application.Services
 {
     public class MotorcycleService : BaseService<Motorcycle>, IMotorcycleService
     {
-        private readonly IMotorcyleRepository _motorcyleRepository;
+        private readonly IMotorcycleRepository _motorcyleRepository;
         private readonly IMessagingService _messagingService;
-        public MotorcycleService(IMotorcyleRepository motorcyleRepository, IMessagingService messagingService) : base(motorcyleRepository)
+        public MotorcycleService(IMotorcycleRepository motorcyleRepository, IMessagingService messagingService) : base(motorcyleRepository)
         {
             _motorcyleRepository = motorcyleRepository;
             _messagingService = messagingService;

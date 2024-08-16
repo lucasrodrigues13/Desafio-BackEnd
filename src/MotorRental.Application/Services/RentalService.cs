@@ -15,11 +15,11 @@ namespace MotorRental.Application.Services
         private readonly IRentalRepository _rentalRepository;
         private readonly IDeliverDriverRepository _deliverDriverRepository;
         private readonly IPlanRepository _planRepository;
-        private readonly IMotorcyleRepository _motorcyleRepository;
+        private readonly IMotorcycleRepository _motorcyleRepository;
         public RentalService(IRentalRepository rentalRepository,
             IDeliverDriverRepository deliverDriverRepository,
             IPlanRepository planRepository,
-            IMotorcyleRepository motorcyleRepository) : base(rentalRepository)
+            IMotorcycleRepository motorcyleRepository) : base(rentalRepository)
         {
             _rentalRepository = rentalRepository;
             _deliverDriverRepository = deliverDriverRepository;
@@ -48,16 +48,18 @@ namespace MotorRental.Application.Services
             };
             await _rentalRepository.AddAsync(rental);
 
-            return ApiResponse.Ok();
+            return ApiResponse.Ok(rental);
         }
 
         public async Task<ApiResponse> InformEndDateRental(InformEndDateRentalDto informEndDateRentalDto)
         {
             var rental = await _rentalRepository.GetByIdAsync(informEndDateRentalDto.RentalId);
             if (rental == null)
-                return ApiResponse.BadRequest(new List<string> { ErrorMessagesConstants.RENTAL_DOESNT_EXIST });
+                return ApiResponse.BadRequest([ErrorMessagesConstants.RENTAL_DOESNT_EXIST]);
 
             ApplyPriceInformEndDateRental(informEndDateRentalDto, rental);
+
+            await _rentalRepository.UpdateAsync(rental);
 
             return ApiResponse.Ok(rental);
         }
@@ -100,17 +102,17 @@ namespace MotorRental.Application.Services
 
         private void ApplyPriceInformEndDateRental(InformEndDateRentalDto informEndDateRentalDto, Rental rental)
         {
-
+            rental.EndDate = informEndDateRentalDto.EndDate;
             if (informEndDateRentalDto.EndDate < rental.ExpectedEndDate)
             {
-                decimal twentyPercent = new decimal(0.2);
-                decimal fourtyPercent = new decimal(0.4);
+                decimal twentyPercent = new decimal(1.2);
+                decimal fourtyPercent = new decimal(1.4);
                 var unusedDays = (rental.ExpectedEndDate - informEndDateRentalDto.EndDate).Value.Days;
-                var usedDays = (DateTime.Now.Date - rental.StartDate).Days;
+                var usedDays = (DateTime.Now.Date - rental.StartDate.Date).Days;
                 var unusedDaysPrice = unusedDays * rental.Plan.DailyPrice;
                 var usedDaysPrice = usedDays * rental.Plan.DailyPrice;
 
-                if (rental.Plan.NumberOfDays <= 7)
+                if (rental.Plan.NumberOfDays == 7)
                     rental.Price = (unusedDaysPrice * twentyPercent) + usedDaysPrice;
                 else if (rental.Plan.NumberOfDays >= 15)
                     rental.Price = (unusedDaysPrice * fourtyPercent) + usedDaysPrice;
@@ -122,6 +124,8 @@ namespace MotorRental.Application.Services
 
                 rental.Price = (overUsedDays * (rental.Plan.DailyPrice + overUseTax)) + (rental.Plan.NumberOfDays * rental.Plan.DailyPrice);
             }
+            else
+                rental.Price = rental.Plan.DailyPrice * rental.Plan.NumberOfDays;
         }
     }
 }

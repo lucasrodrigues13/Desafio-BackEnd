@@ -4,7 +4,7 @@ using MotorRental.Infrastructure.Data;
 
 namespace MotorRental.Infrastructure.Repositories
 {
-    public class MotorcyleRepository : BaseRepository<Motorcycle>, IMotorcyleRepository
+    public class MotorcyleRepository : BaseRepository<Motorcycle>, IMotorcycleRepository
     {
         public MotorcyleRepository(ApplicationDbContext context) : base(context)
         {

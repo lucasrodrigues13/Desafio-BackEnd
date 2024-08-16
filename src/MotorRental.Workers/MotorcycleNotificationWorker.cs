@@ -62,7 +62,7 @@ namespace MotorRental.Workers
                 {
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
-                        var motorcyleRepository = scope.ServiceProvider.GetRequiredService<IMotorcyleRepository>();
+                        var motorcyleRepository = scope.ServiceProvider.GetRequiredService<IMotorcycleRepository>();
                         motorcycle.MotorcycleNotification = new MotorcycleNotification { Motorcycle = motorcycle };
                         await motorcyleRepository.UpdateAsync(motorcycle);
                     }

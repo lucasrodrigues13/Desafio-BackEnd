@@ -34,7 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IDeliverDriverRepository, DeliverDriverRepository>();
-            services.AddScoped<IMotorcyleRepository, MotorcyleRepository>();
+            services.AddScoped<IMotorcycleRepository, MotorcyleRepository>();
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IRentalRepository, RentalRepository>(); 
 

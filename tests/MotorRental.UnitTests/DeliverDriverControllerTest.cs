@@ -41,7 +41,6 @@ namespace MotorRental.Api.Tests
             Assert.IsType<ApiResponse>(okResult.Value);
         }
 
-
         [Fact]
         public async Task UploadLicenseDriverPhoto_Should_Return_BadRequest()
         {

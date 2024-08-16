@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Api.Tests", "te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{63B9E349-AAEB-4CBD-9AD7-51BE66A90956}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Application.Tests", "MotorRental.Service.Tests\MotorRental.Application.Tests.csproj", "{F51738E7-BE20-4E27-BEE2-54CC59024319}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{EC6D9DBD-2AAE-4A79-9306-14EF703A5497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC6D9DBD-2AAE-4A79-9306-14EF703A5497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC6D9DBD-2AAE-4A79-9306-14EF703A5497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F51738E7-BE20-4E27-BEE2-54CC59024319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F51738E7-BE20-4E27-BEE2-54CC59024319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51738E7-BE20-4E27-BEE2-54CC59024319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F51738E7-BE20-4E27-BEE2-54CC59024319}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{8CFF8A89-0299-4F21-89CD-110B3784363E} = {3AD632E0-18AB-42D3-B348-F7BDE5A4D040}
 		{E0960EE7-FEA0-4D7B-93CF-6C6048189984} = {3AD632E0-18AB-42D3-B348-F7BDE5A4D040}
 		{EC6D9DBD-2AAE-4A79-9306-14EF703A5497} = {63B9E349-AAEB-4CBD-9AD7-51BE66A90956}
+		{F51738E7-BE20-4E27-BEE2-54CC59024319} = {63B9E349-AAEB-4CBD-9AD7-51BE66A90956}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E01CA3A0-73E8-4847-B886-326D1F4A9CFE}

@@ -28,7 +28,7 @@ namespace MotorRental.Workers
 
                     services.AddSingleton(motorcycleNotificationQueueSettings);
 
-                    services.AddScoped<IMotorcyleRepository, MotorcyleRepository>();
+                    services.AddScoped<IMotorcycleRepository, MotorcyleRepository>();
 
                     services.AddHostedService<MotorcycleNotificationWorker>();
                 });

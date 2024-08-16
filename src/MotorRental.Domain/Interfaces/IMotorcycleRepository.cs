@@ -2,7 +2,7 @@
 
 namespace MotorRental.Domain.Interfaces
 {
-    public interface IMotorcyleRepository : IBaseRepository<Motorcycle>
+    public interface IMotorcycleRepository : IBaseRepository<Motorcycle>
     {
         Motorcycle? GetNextAvailableMotorcycle();
     }
