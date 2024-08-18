@@ -5,12 +5,11 @@ services:
     image: motorrental.webapi:latest
     build:
       context: .
-      dockerfile: MotorRental.WebApi/Dockerfile
+      dockerfile: src/MotorRental.WebApi/Dockerfile
     ports:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=database;Database=motorrentaldb;Username=youruser;Password=yourpassword
       - RabbitMQ__HostName=rabbitmq
     depends_on:
       - database

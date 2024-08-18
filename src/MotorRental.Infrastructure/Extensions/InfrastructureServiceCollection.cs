@@ -11,10 +11,10 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class InfrastructureServiceCollection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, string connectionStringKey)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(configuration.GetConnectionString(connectionStringKey)));
 
             var motorcycleNotificationQueueSettings = configuration.GetSection("RabbitMQ").Get<MotorcycleNotificationQueueSettings>();
             services.AddSingleton(motorcycleNotificationQueueSettings);
