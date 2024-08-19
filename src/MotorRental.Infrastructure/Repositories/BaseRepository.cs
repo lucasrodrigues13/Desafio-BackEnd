@@ -7,7 +7,7 @@ namespace MotorRental.Infrastructure.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        private readonly ApplicationDbContext _databaseContext;
+        protected readonly ApplicationDbContext _databaseContext;
         private readonly DbSet<T> _dbSet;
 
         public BaseRepository(ApplicationDbContext context)

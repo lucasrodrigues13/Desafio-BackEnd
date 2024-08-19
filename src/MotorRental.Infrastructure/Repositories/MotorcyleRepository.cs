@@ -8,15 +8,13 @@ namespace MotorRental.Infrastructure.Repositories
 {
     public class MotorcyleRepository : BaseRepository<Motorcycle>, IMotorcycleRepository
     {
-        private readonly ApplicationDbContext _context;
         public MotorcyleRepository(ApplicationDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<List<MotorcycleDto>> GetByLicensePlate(string licensePlate)
         {
-            var query = _context.Motorcycles.AsNoTracking();
+            var query = _databaseContext.Motorcycles.AsNoTracking();
 
             if (!string.IsNullOrEmpty(licensePlate))
                 query = query.Where(a => a.LicensePlate.Contains(licensePlate));

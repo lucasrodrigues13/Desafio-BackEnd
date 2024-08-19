@@ -92,7 +92,7 @@ namespace MotorRental.Application.Tests
                 Id = 1,
                 LicensePlate = motorcycleDto.LicensePlate,
                 Model = motorcycleDto.Model,
-                Year = motorcycleDto.Year
+                Year = motorcycleDto.Year.Value
             };
 
             _motorcyleRepositoryMock.Setup(r => r.AddAsync(It.IsAny<Motorcycle>(), null)).ReturnsAsync(addedMotorcycle);
@@ -137,7 +137,7 @@ namespace MotorRental.Application.Tests
                 Id = 1,
                 LicensePlate = motorcycleDto.LicensePlate,
                 Model = motorcycleDto.Model,
-                Year = motorcycleDto.Year
+                Year = motorcycleDto.Year.Value
             };
 
             _motorcyleRepositoryMock.Setup(r => r.AddAsync(It.IsAny<Motorcycle>(), null)).ReturnsAsync(addedMotorcycle);

@@ -10,5 +10,9 @@ namespace MotorRental.Infrastructure.Repositories
         {
         }
 
+        public bool VerifyExistsByColumn(Func<DeliverDriver, bool> filter)
+        {
+            return _databaseContext.DeliveryDrivers.Where(filter).Any();
+        }
     }
 }

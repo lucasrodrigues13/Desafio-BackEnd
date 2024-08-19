@@ -49,7 +49,7 @@ namespace MotorRental.WebApi
             });
 
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            var connectionStringKey = builder.Environment.IsDevelopment() ? "mssql_local" : "mssql_compose";
+            var connectionStringKey = builder.Environment.IsDevelopment() ? "local_db" : "docker_compose_db";
 
             builder.Services.AddInfrastructure(builder.Configuration, connectionStringKey);
             builder.Services.AddServices();

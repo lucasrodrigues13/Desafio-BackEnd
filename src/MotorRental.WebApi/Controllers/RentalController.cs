@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application.Interfaces;
+using MotorRental.Domain.Constants;
 
 namespace MotorRental.WebApi.Controllers
 {
+    [Authorize(Roles = $"{MotorRentalIdentityConstants.ADMIN_ROLE_NAME}, {MotorRentalIdentityConstants.DELIVER_DRIVER_ROLE_NAME}")]
     [Route("api/[controller]")]
     [ApiController]
     public class RentalController : ApplicationControllerBase

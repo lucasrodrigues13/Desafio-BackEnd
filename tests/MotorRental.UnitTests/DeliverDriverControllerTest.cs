@@ -6,7 +6,6 @@ using MotorRental.Application.Interfaces;
 using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
 using MotorRental.WebApi.Controllers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MotorRental.Api.Tests
 {
@@ -31,7 +30,7 @@ namespace MotorRental.Api.Tests
                 DeliverDriverId = 1,
                 LicenseDriverPhoto = _formFileMock.Object
             };
-            _driverServiceMock.Setup(a => a.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "test@email.com.br")).ReturnsAsync(ApiResponse.Ok());
+            _driverServiceMock.Setup(a => a.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto)).ReturnsAsync(ApiResponse.Ok());
 
             var controller = new DeliverDriverController(_driverServiceMock.Object, _rentalServiceMock.Object);
 
@@ -49,7 +48,7 @@ namespace MotorRental.Api.Tests
                 DeliverDriverId = 1,
                 LicenseDriverPhoto = null
             };
-            _driverServiceMock.Setup(a => a.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "test@email.com.br"))
+            _driverServiceMock.Setup(a => a.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto))
                 .ReturnsAsync(new ApiResponse(false, ErrorMessagesConstants.BADREQUEST_DEFAULT, null, []));
 
             var controller = new DeliverDriverController(_driverServiceMock.Object, _rentalServiceMock.Object);

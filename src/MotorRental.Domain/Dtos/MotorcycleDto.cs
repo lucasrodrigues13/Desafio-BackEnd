@@ -6,7 +6,7 @@ namespace MotorRental.Domain.Dtos
     {
         public int Id { get; set; }
         [Required]
-        public int Year { get; set; }
+        public int? Year { get; set; }
         [Required(AllowEmptyStrings = false)]
         public string Model { get; set; }
         [Required(AllowEmptyStrings = false)]

@@ -29,13 +29,13 @@ namespace MotorRental.Service.Tests
                 DeliverDriverId = 1,
                 LicenseDriverPhoto = _formFileMock.Object
             };
-            var deliverDriver = new DeliverDriver { Id = 1 };
+            var deliverDriver = new DeliverDriver { Id = 1, Email = "flucasrodrigues@hotmail.com" };
 
             _driverRepositoryMock.Setup(a => a.GetByIdAsync(uploadLicenseDriverPhotoDto.DeliverDriverId)).ReturnsAsync(deliverDriver);
 
             var service = new DeliverDriverService(_awsS3ServiceMock.Object, _driverRepositoryMock.Object);
 
-            var result = await service.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "test@email.com.br");
+            var result = await service.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto);
 
             var okResult = Assert.IsType<ApiResponse>(result);
             Assert.True(okResult.Success);

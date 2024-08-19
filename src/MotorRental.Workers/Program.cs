@@ -12,7 +12,9 @@ namespace MotorRental.Workers
         {
             var builder = Host.CreateApplicationBuilder(args);
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             CreateHostBuilder(args).Build().Run();
+
             var host = builder.Build();
             host.Run();
         }
@@ -21,8 +23,9 @@ namespace MotorRental.Workers
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    var connectionStringKey = hostContext.HostingEnvironment.IsDevelopment() ? "local_db" : "docker_compose_db";
                     services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+                        options.UseNpgsql(hostContext.Configuration.GetConnectionString(connectionStringKey)));
 
                     var motorcycleNotificationQueueSettings = hostContext.Configuration.GetSection("RabbitMQ").Get<MotorcycleNotificationQueueSettings>();
 

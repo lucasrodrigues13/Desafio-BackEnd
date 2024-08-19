@@ -9,7 +9,19 @@ services:
     ports:
       - "8080:80"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Compose
+      - RabbitMQ__HostName=rabbitmq
+    depends_on:
+      - database
+      - rabbitmq
+
+  worker:
+    image: motorrental.worker:latest
+    build:
+      context: .
+      dockerfile: src/MotorRental.Workers/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Compose
       - RabbitMQ__HostName=rabbitmq
     depends_on:
       - database

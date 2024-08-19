@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application.Interfaces;
+using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
 
 namespace MotorRental.WebApi.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = MotorRentalIdentityConstants.ADMIN_ROLE_NAME)]
     [Route("api/[controller]")]
     [ApiController]
     public class MotorcycleController : ApplicationControllerBase
@@ -29,21 +31,29 @@ namespace MotorRental.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MotorcycleDto motorcycleDto)
         {
-            var teste = ModelBinderFactory;
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _motorcycleService.AddMotorcycle(motorcycleDto);
+            var apiResponse = await _motorcycleService.AddMotorcycle(motorcycleDto);
 
-            return Ok();
+            if (!apiResponse.Success)
+                return BadRequest(apiResponse);
+
+            return Ok(apiResponse);
         }
 
         [HttpPatch("UpdateLicensePlate")]
         public async Task<IActionResult> UpdateLicensePlate(UpdateLicensePlateDto updateLicensePlateRequest)
         {
-            await _motorcycleService.UpdateLicensePlate(updateLicensePlateRequest);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok();
+            var apiResponse = await _motorcycleService.UpdateLicensePlate(updateLicensePlateRequest);
+
+            if (!apiResponse.Success)
+                return BadRequest(apiResponse);
+
+            return Ok(apiResponse);
         }
 
         [HttpDelete]

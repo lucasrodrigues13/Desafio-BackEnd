@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MotorRental.Application.Interfaces;
+using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
 using System.Security.Claims;
 
 namespace MotorRental.WebApi.Controllers
 {
-    //[Authorize(Roles = "Admin,DeliverDriver")]
+    [Authorize(Roles = $"{MotorRentalIdentityConstants.ADMIN_ROLE_NAME}, {MotorRentalIdentityConstants.DELIVER_DRIVER_ROLE_NAME}")]
     [Route("api/[controller]")]
     [ApiController]
     public class DeliverDriverController : ApplicationControllerBase
@@ -21,8 +23,10 @@ namespace MotorRental.WebApi.Controllers
         [HttpPost("UploadLicenseDriverPhoto")]
         public async Task<IActionResult> UploadLicenseDriverPhoto(UploadLicenseDriverPhotoDto uploadLicenseDriverPhotoDto)
         {
-            //var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            var apiResponse = await _driverService.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto, "test@email.com.br");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var apiResponse = await _driverService.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto);
 
             if (!apiResponse.Success)
                 return BadRequest(apiResponse);
@@ -33,6 +37,9 @@ namespace MotorRental.WebApi.Controllers
         [HttpPut("RentAMotorcycle")]
         public async Task<IActionResult> RentAMotorcycle(RentAMotorcycleDto rentAMotorcycleDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var apiResponse = await _rentalService.RentAMotorcycle(rentAMotorcycleDto);
             if (!apiResponse.Success)
                 return BadRequest(apiResponse);
@@ -43,6 +50,9 @@ namespace MotorRental.WebApi.Controllers
         [HttpPut("InformEndDateRental")]
         public async Task<IActionResult> InformEndDateRental(InformEndDateRentalDto informEndDateRentalDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var apiResponse = await _rentalService.InformEndDateRental(informEndDateRentalDto);
             if (!apiResponse.Success)
                 return BadRequest(apiResponse);
