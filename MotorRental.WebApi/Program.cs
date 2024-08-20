@@ -17,7 +17,7 @@ namespace MotorRental.WebApi
             builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>())
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                 });
 
             builder.Services.AddEndpointsApiExplorer();

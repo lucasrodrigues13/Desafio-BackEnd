@@ -12,7 +12,7 @@ namespace MotorRental.WebApi.Controllers
             return Ok(null);
         }
 
-        protected OkObjectResult Ok([ActionResultObjectValue] object? value)
+        protected OkObjectResult Ok(object? value)
         {
             return base.Ok(ApiResponse.Ok(value));
         }

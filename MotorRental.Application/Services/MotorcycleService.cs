@@ -62,7 +62,7 @@ namespace MotorRental.Application.Services
             var errors = new List<string>();
             var motorcycleDb = await _motorcyleRepository.GetByLicensePlate(licensePlate);
 
-            if (motorcycleDb != null)
+            if (motorcycleDb.Any())
                 errors.Add(ErrorMessagesConstants.MOTORCYCLE_LICENSE_PLATE_EXISTS);
 
             return errors;

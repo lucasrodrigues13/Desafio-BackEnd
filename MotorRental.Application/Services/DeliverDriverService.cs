@@ -11,13 +11,17 @@ namespace MotorRental.Application.Services
 {
     public class DeliverDriverService : BaseService<DeliverDriver>, IDeliverDriverService
     {
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IAwsS3Service _awsS3Service;
         private readonly IDeliverDriverRepository _deliverDriverRepository;
-        public DeliverDriverService(IAwsS3Service awsS3Service, IDeliverDriverRepository deliverDriverRepository) : base(deliverDriverRepository)
+        public DeliverDriverService(
+            UserManager<IdentityUser> userManager,
+            IAwsS3Service awsS3Service,
+            IDeliverDriverRepository deliverDriverRepository) : base(deliverDriverRepository)
         {
             _awsS3Service = awsS3Service;
             _deliverDriverRepository = deliverDriverRepository;
+            _userManager = userManager;
         }
 
         public async Task<ApiResponse> RegisterAdmin(RegisterDto registerDto)
@@ -35,7 +39,6 @@ namespace MotorRental.Application.Services
 
             return ApiResponse.Ok();
         }
-
         public async Task<ApiResponse> RegisterDeliverDriver(RegisterDeliverDriverDto registerDeliverDriverDto)
         {
             var errors = ValidDeliverDriverData(registerDeliverDriverDto);
@@ -127,7 +130,7 @@ namespace MotorRental.Application.Services
 
             return errors;
         }
-        private async Task<Microsoft.AspNetCore.Identity.IdentityResult?> RegisterUser(RegisterDto registerDto, IdentityUser user, string role)
+        private async Task<IdentityResult?> RegisterUser(RegisterDto registerDto, IdentityUser user, string role)
         {
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
