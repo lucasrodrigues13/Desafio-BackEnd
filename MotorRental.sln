@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.WebApi", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Workers", "src\MotorRental.Workers\MotorRental.Workers.csproj", "{E0960EE7-FEA0-4D7B-93CF-6C6048189984}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Api.Tests", "tests\MotorRental.UnitTests\MotorRental.Api.Tests.csproj", "{EC6D9DBD-2AAE-4A79-9306-14EF703A5497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotorRental.Api.Tests", "tests\MotorRental.Api.Tests\MotorRental.Api.Tests.csproj", "{EC6D9DBD-2AAE-4A79-9306-14EF703A5497}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{63B9E349-AAEB-4CBD-9AD7-51BE66A90956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Application.Tests", "MotorRental.Service.Tests\MotorRental.Application.Tests.csproj", "{F51738E7-BE20-4E27-BEE2-54CC59024319}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorRental.Application.Tests", "tests\MotorRental.Service.Tests\MotorRental.Application.Tests.csproj", "{F51738E7-BE20-4E27-BEE2-54CC59024319}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
