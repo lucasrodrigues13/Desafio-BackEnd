@@ -7,7 +7,7 @@ using MotorRental.Domain.Dtos;
 using MotorRental.Domain.Entities;
 using MotorRental.Domain.Interfaces;
 
-namespace MotorRental.Service.Tests
+namespace MotorRental.Application.Tests
 {
     public class DeliverDriverServiceTest
     {
