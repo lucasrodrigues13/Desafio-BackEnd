@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using MotorRental.Application.Common;
 using MotorRental.Application.Interfaces;
 using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
@@ -41,12 +40,9 @@ namespace MotorRental.WebApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var apiResponse = await _deliverDriverService.RegisterAdmin(registerDto);
 
-            if (!apiResponse.Success)
-                return BadRequest(apiResponse);
 
-            return Ok(apiResponse);
+            return Ok();
         }
 
         [HttpPost("RegisterDeliverDriver")]
@@ -55,12 +51,9 @@ namespace MotorRental.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var apiResponse = await _deliverDriverService.RegisterDeliverDriver(registerDeliverDriverDto);
+            await _deliverDriverService.RegisterDeliverDriver(registerDeliverDriverDto);
 
-            if (!apiResponse.Success)
-                return BadRequest(apiResponse);
-
-            return Ok(apiResponse);
+            return Ok();
         }
 
         [HttpPost("Login")]
@@ -93,13 +86,13 @@ namespace MotorRental.WebApi.Controllers
                 audience: _configuration["Jwt:Issuer"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
-            signingCredentials: creds);
+                signingCredentials: creds);
 
-            return Ok(ApiResponse.Ok(new
+            return Ok(new
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = token.ValidTo
-            }));
+            });
         }
     }
 }
