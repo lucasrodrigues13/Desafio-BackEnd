@@ -14,10 +14,12 @@ namespace MotorRental.Application.Services
         private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
         private readonly IAwsS3Service _awsS3Service;
         private readonly IDeliverDriverRepository _deliverDriverRepository;
-        public DeliverDriverService(IAwsS3Service awsS3Service, IDeliverDriverRepository deliverDriverRepository) : base(deliverDriverRepository)
+
+        public DeliverDriverService(IAwsS3Service awsS3Service, IDeliverDriverRepository deliverDriverRepository, UserManager<IdentityUser> userManager) : base(deliverDriverRepository)
         {
             _awsS3Service = awsS3Service;
             _deliverDriverRepository = deliverDriverRepository;
+            _userManager = userManager;
         }
 
         public async Task<ApiResponse> RegisterAdmin(RegisterDto registerDto)

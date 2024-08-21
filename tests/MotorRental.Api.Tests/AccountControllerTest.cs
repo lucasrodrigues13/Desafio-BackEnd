@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using MotorRental.Application.Common;
 using MotorRental.Application.Interfaces;
+using MotorRental.Application.Services;
 using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
 using MotorRental.Domain.Entities;
@@ -38,10 +40,12 @@ namespace MotorRental.Api.Tests
         public async Task Login_Should_Return_Ok()
         {
             var loginDto = new LoginDto { Username = "testuser", Password = "password" };
+            var identityUser = new IdentityUser { UserName = loginDto.Username };
             _signInManagerMock.Setup(x => x.PasswordSignInAsync(loginDto.Username, loginDto.Password, false, false))
                               .ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
-            _userManagerMock.Setup(x => x.FindByNameAsync(loginDto.Username))
-                              .ReturnsAsync(new IdentityUser { UserName = loginDto.Username });
+            _userManagerMock.Setup(x => x.FindByNameAsync(loginDto.Username)).ReturnsAsync(identityUser);
+            _userManagerMock.Setup(x => x.GetRolesAsync(identityUser)).ReturnsAsync(["Admin", "DeliverDriver"]);
+
             _configurationMock.Setup(x => x["Jwt:Key"]).Returns("e83d2332-d140-45b6-b21c-d8f864a3327e");
             _configurationMock.Setup(x => x["Jwt:Issuer"]).Returns("YourIssuer");
 
@@ -80,7 +84,7 @@ namespace MotorRental.Api.Tests
                             .ReturnsAsync(IdentityResult.Success);
             _userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<IdentityUser>(), MotorRentalIdentityConstants.ADMIN_ROLE_NAME))
                 .ReturnsAsync(IdentityResult.Success);
-            _deliverDriverServiceMock.Setup(x => x.AddAsync(It.IsAny<DeliverDriver>()));
+            _deliverDriverServiceMock.Setup(x => x.RegisterAdmin(It.IsAny<RegisterDto>())).ReturnsAsync(ApiResponse.Ok());
 
             var controller = new AccountController(_userManagerMock.Object, _signInManagerMock.Object,
                 _roleManagerMock.Object, _configurationMock.Object, _deliverDriverServiceMock.Object);
@@ -98,7 +102,7 @@ namespace MotorRental.Api.Tests
                             .ReturnsAsync(IdentityResult.Failed());
             _userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<IdentityUser>(), MotorRentalIdentityConstants.ADMIN_ROLE_NAME))
                 .ReturnsAsync(IdentityResult.Success);
-            _deliverDriverServiceMock.Setup(x => x.AddAsync(It.IsAny<DeliverDriver>()));
+            _deliverDriverServiceMock.Setup(x => x.RegisterAdmin(registerModel)).ReturnsAsync(new ApiResponse(false, ErrorMessagesConstants.BADREQUEST_DEFAULT, null, []));
 
             var controller = new AccountController(_userManagerMock.Object, _signInManagerMock.Object,
                 _roleManagerMock.Object, _configurationMock.Object, _deliverDriverServiceMock.Object);
@@ -116,6 +120,7 @@ namespace MotorRental.Api.Tests
                             .ReturnsAsync(IdentityResult.Success);
             _userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<IdentityUser>(), MotorRentalIdentityConstants.ADMIN_ROLE_NAME))
                 .ReturnsAsync(IdentityResult.Success);
+            _deliverDriverServiceMock.Setup(x => x.RegisterDeliverDriver(It.IsAny<RegisterDeliverDriverDto>())).ReturnsAsync(ApiResponse.Ok());
 
             var controller = new AccountController(_userManagerMock.Object, _signInManagerMock.Object,
                 _roleManagerMock.Object, _configurationMock.Object, _deliverDriverServiceMock.Object);
@@ -131,8 +136,8 @@ namespace MotorRental.Api.Tests
             var registerModel = new RegisterDeliverDriverDto { Username = "newuser", Password = "password", Email = "email@test.com" };
             _userManagerMock.Setup(x => x.CreateAsync(It.IsAny<IdentityUser>(), registerModel.Password))
                             .ReturnsAsync(IdentityResult.Failed());
-            _userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<IdentityUser>(), MotorRentalIdentityConstants.ADMIN_ROLE_NAME))
-                .ReturnsAsync(IdentityResult.Success);
+            _userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<IdentityUser>(), MotorRentalIdentityConstants.ADMIN_ROLE_NAME)).ReturnsAsync(IdentityResult.Success);
+            _deliverDriverServiceMock.Setup(x => x.RegisterDeliverDriver(registerModel)).ReturnsAsync(new ApiResponse(false, ErrorMessagesConstants.BADREQUEST_DEFAULT, null, []));
 
             var controller = new AccountController(_userManagerMock.Object, _signInManagerMock.Object,
                 _roleManagerMock.Object, _configurationMock.Object, _deliverDriverServiceMock.Object);

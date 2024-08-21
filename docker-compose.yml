@@ -6,11 +6,30 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "12345"
-      POSTGRES_DB: motorrentaldb
+      POSTGRES_DB: MotorRentalDb
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrations:
+    container_name: service-migrations
+    image: service-migrations
+    build:
+      context: .
+      dockerfile: src/MotorRental.WebApi/Dockerfile
+      target: migrations
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Compose
+      - ConnectionStrings__DefaultConnection=Host=database;Port=5432;Database=MotorRentalDb;Username=postgres;Password=12345
+    depends_on:
+      database:
+        condition: service_healthy 
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -20,6 +39,12 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   webapi:
     image: motorrental.webapi:latest
@@ -27,13 +52,16 @@ services:
       context: .
       dockerfile: src/MotorRental.WebApi/Dockerfile
     ports:
-      - "8080:80"
+      - "8080:8080"
+      - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Compose
       - RabbitMQ__HostName=rabbitmq
     depends_on:
-      - database
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      database:
+        condition: service_healthy 
 
   worker:
     image: motorrental.worker:latest
@@ -44,8 +72,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Compose
       - RabbitMQ__HostName=rabbitmq
     depends_on:
-      - database
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      database: 
+        condition: service_healthy 
 
 volumes:
   postgres-data:

@@ -41,8 +41,12 @@ namespace MotorRental.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var apiResponse = await _deliverDriverService.RegisterAdmin(registerDto);
 
-            return Ok();
+            if (!apiResponse.Success)
+                return BadRequest(apiResponse);
+
+            return Ok(apiResponse);
         }
 
         [HttpPost("RegisterDeliverDriver")]
@@ -51,7 +55,10 @@ namespace MotorRental.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _deliverDriverService.RegisterDeliverDriver(registerDeliverDriverDto);
+            var apiResponse = await _deliverDriverService.RegisterDeliverDriver(registerDeliverDriverDto);
+
+            if (!apiResponse.Success)
+                return BadRequest(apiResponse);
 
             return Ok();
         }

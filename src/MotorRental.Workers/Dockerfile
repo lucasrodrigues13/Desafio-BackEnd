@@ -11,7 +11,7 @@ COPY ["src/MotorRental.Infrastructure/MotorRental.Infrastructure.csproj", "src/M
 RUN dotnet restore "./src/MotorRental.Workers/MotorRental.Workers.csproj"
 COPY . .
 WORKDIR "/src/src/MotorRental.Workers"
-RUN dotnet build "./MotorRental.Workers.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+RUN dotnet build "MotorRental.Workers.csproj" -c %BUILD_CONFIGURATION% -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

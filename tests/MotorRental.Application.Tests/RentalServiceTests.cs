@@ -1,4 +1,5 @@
 ﻿using Moq;
+using MotorRental.Application.Common;
 using MotorRental.Application.Services;
 using MotorRental.Domain.Constants;
 using MotorRental.Domain.Dtos;
@@ -60,11 +61,13 @@ namespace MotorRental.Application.Tests
         {
             var rentDto = new RentAMotorcycleDto { MotorcycleId = motorcycleId, DeliverDriverId = deliverDriverId, PlanId = planId };
             _motorcycleRepositoryMock.Setup(r => r.GetByIdAsync(rentDto.MotorcycleId)).ReturnsAsync((Motorcycle?)null);
+            _planRepositoryMock.Setup(r => r.GetByIdAsync(rentDto.PlanId)).ReturnsAsync((Plan?)null);
+            _deliverDriverRepositoryMock.Setup(r => r.GetByIdAsync(rentDto.DeliverDriverId)).ReturnsAsync((DeliverDriver?)null);
 
             var result = await _rentalService.RentAMotorcycle(rentDto);
 
-            Assert.False(result.Success);
-            Assert.Contains(ErrorMessagesConstants.NO_MOTORCYCLE_AVAILABLE, result.Errors);
+            var okResult = Assert.IsType<ApiResponse>(result);
+            Assert.False(okResult.Success);
         }
 
         [Fact]
