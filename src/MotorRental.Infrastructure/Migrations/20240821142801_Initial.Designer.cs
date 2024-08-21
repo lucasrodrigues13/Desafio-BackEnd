@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MotorRental.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240813150145_Initial")]
+    [Migration("20240821142801_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -21,6 +21,9 @@ namespace MotorRental.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -53,13 +56,13 @@ namespace MotorRental.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c913f552-8f32-40db-9676-5b9a77bc2a26",
+                            Id = "d454f7e6-ece1-4c3f-bea7-6e20ef291d4f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "82bcaecf-5172-4d82-9efb-559fd0101885",
+                            Id = "2a7a886f-17d2-4bfc-9075-6f8f9b8da60b",
                             Name = "DeliverDriver",
                             NormalizedName = "DELIVERDRIVER"
                         });
@@ -156,17 +159,17 @@ namespace MotorRental.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Id = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a67f558b-375b-4887-aafc-a6f42344ab4b",
+                            ConcurrencyStamp = "87102045-c70f-4548-88e9-3484267fc366",
                             Email = "admin@motorrental.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MOTORRENTAL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHSRHFVr5zOTt+G5JZHyhe/Uoghy2OAGjpXz1m+Tt8ecCS6hHCTDfdXAsIkevYYmQg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEITHzUGR8aNOeFLV6uRx7cVtj0XGD/kTgW5zK2gL8dBtr2ziCino7+lwm22OC8A5DA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c6a5d6d4-26d5-451d-873d-8bea657c3d7b",
+                            SecurityStamp = "c39907ea-f964-469d-b84e-a98bb165e33d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -236,8 +239,8 @@ namespace MotorRental.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "a213286b-c623-4b76-93e0-3557ba81c917",
-                            RoleId = "c913f552-8f32-40db-9676-5b9a77bc2a26"
+                            UserId = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
+                            RoleId = "d454f7e6-ece1-4c3f-bea7-6e20ef291d4f"
                         });
                 });
 
@@ -419,40 +422,40 @@ namespace MotorRental.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3612),
-                            CreatedBy = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Created = new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4900),
+                            CreatedBy = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             DailyPrice = 30m,
                             NumberOfDays = 7
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3632),
-                            CreatedBy = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Created = new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4916),
+                            CreatedBy = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             DailyPrice = 28m,
                             NumberOfDays = 15
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3633),
-                            CreatedBy = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Created = new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4917),
+                            CreatedBy = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             DailyPrice = 22m,
                             NumberOfDays = 30
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3635),
-                            CreatedBy = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Created = new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4918),
+                            CreatedBy = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             DailyPrice = 20m,
                             NumberOfDays = 45
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3636),
-                            CreatedBy = "a213286b-c623-4b76-93e0-3557ba81c917",
+                            Created = new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4919),
+                            CreatedBy = "10652d96-6e1a-474b-8fb9-6e4d21f48133",
                             DailyPrice = 18m,
                             NumberOfDays = 50
                         });
@@ -503,6 +506,9 @@ namespace MotorRental.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeliverDriverId")
+                        .IsUnique();
 
                     b.HasIndex("MotorcycleId")
                         .IsUnique();
@@ -578,7 +584,7 @@ namespace MotorRental.Infrastructure.Migrations
                 {
                     b.HasOne("MotorRental.Domain.Entities.DeliverDriver", "DeliverDriver")
                         .WithOne("Rental")
-                        .HasForeignKey("MotorRental.Domain.Entities.Rental", "MotorcycleId")
+                        .HasForeignKey("MotorRental.Domain.Entities.Rental", "DeliverDriverId")
                         .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 

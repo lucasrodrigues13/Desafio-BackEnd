@@ -262,8 +262,8 @@ namespace MotorRental.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Rentals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rentals_DeliveryDrivers_MotorcycleId",
-                        column: x => x.MotorcycleId,
+                        name: "FK_Rentals_DeliveryDrivers_DeliverDriverId",
+                        column: x => x.DeliverDriverId,
                         principalTable: "DeliveryDrivers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
@@ -286,31 +286,31 @@ namespace MotorRental.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "82bcaecf-5172-4d82-9efb-559fd0101885", null, "DeliverDriver", "DELIVERDRIVER" },
-                    { "c913f552-8f32-40db-9676-5b9a77bc2a26", null, "Admin", "ADMIN" }
+                    { "2a7a886f-17d2-4bfc-9075-6f8f9b8da60b", null, "DeliverDriver", "DELIVERDRIVER" },
+                    { "d454f7e6-ece1-4c3f-bea7-6e20ef291d4f", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a213286b-c623-4b76-93e0-3557ba81c917", 0, "a67f558b-375b-4887-aafc-a6f42344ab4b", "admin@motorrental.com", true, false, null, "ADMIN@MOTORRENTAL.COM", "ADMIN", "AQAAAAIAAYagAAAAEHSRHFVr5zOTt+G5JZHyhe/Uoghy2OAGjpXz1m+Tt8ecCS6hHCTDfdXAsIkevYYmQg==", null, false, "c6a5d6d4-26d5-451d-873d-8bea657c3d7b", false, "admin" });
+                values: new object[] { "10652d96-6e1a-474b-8fb9-6e4d21f48133", 0, "87102045-c70f-4548-88e9-3484267fc366", "admin@motorrental.com", true, false, null, "ADMIN@MOTORRENTAL.COM", "ADMIN", "AQAAAAIAAYagAAAAEITHzUGR8aNOeFLV6uRx7cVtj0XGD/kTgW5zK2gL8dBtr2ziCino7+lwm22OC8A5DA==", null, false, "c39907ea-f964-469d-b84e-a98bb165e33d", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Plans",
                 columns: new[] { "Id", "Created", "CreatedBy", "DailyPrice", "LastModified", "LastModifiedBy", "NumberOfDays" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3612), "a213286b-c623-4b76-93e0-3557ba81c917", 30m, null, null, 7 },
-                    { 2, new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3632), "a213286b-c623-4b76-93e0-3557ba81c917", 28m, null, null, 15 },
-                    { 3, new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3633), "a213286b-c623-4b76-93e0-3557ba81c917", 22m, null, null, 30 },
-                    { 4, new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3635), "a213286b-c623-4b76-93e0-3557ba81c917", 20m, null, null, 45 },
-                    { 5, new DateTime(2024, 8, 13, 12, 1, 45, 163, DateTimeKind.Local).AddTicks(3636), "a213286b-c623-4b76-93e0-3557ba81c917", 18m, null, null, 50 }
+                    { 1, new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4900), "10652d96-6e1a-474b-8fb9-6e4d21f48133", 30m, null, null, 7 },
+                    { 2, new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4916), "10652d96-6e1a-474b-8fb9-6e4d21f48133", 28m, null, null, 15 },
+                    { 3, new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4917), "10652d96-6e1a-474b-8fb9-6e4d21f48133", 22m, null, null, 30 },
+                    { 4, new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4918), "10652d96-6e1a-474b-8fb9-6e4d21f48133", 20m, null, null, 45 },
+                    { 5, new DateTime(2024, 8, 21, 11, 28, 1, 732, DateTimeKind.Local).AddTicks(4919), "10652d96-6e1a-474b-8fb9-6e4d21f48133", 18m, null, null, 50 }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "c913f552-8f32-40db-9676-5b9a77bc2a26", "a213286b-c623-4b76-93e0-3557ba81c917" });
+                values: new object[] { "d454f7e6-ece1-4c3f-bea7-6e20ef291d4f", "10652d96-6e1a-474b-8fb9-6e4d21f48133" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -371,6 +371,12 @@ namespace MotorRental.Infrastructure.Migrations
                 name: "IX_Motorcycles_LicensePlate",
                 table: "Motorcycles",
                 column: "LicensePlate",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rentals_DeliverDriverId",
+                table: "Rentals",
+                column: "DeliverDriverId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

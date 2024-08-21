@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using MotorRental.Application.Common;
 using MotorRental.Application.Services;
@@ -16,10 +17,12 @@ namespace MotorRental.Application.Tests
     {
         private readonly Mock<IAwsS3Service> _awsS3ServiceMock;
         private readonly Mock<IDeliverDriverRepository> _driverRepositoryMock;
+        private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
         public DeliverDriverServiceTest()
         {
             _driverRepositoryMock = new Mock<IDeliverDriverRepository>();
             _awsS3ServiceMock = new Mock<IAwsS3Service>();
+            _userManagerMock = new Mock<UserManager<IdentityUser>>();
         }
 
         [Fact]
@@ -55,7 +58,7 @@ namespace MotorRental.Application.Tests
 
             _driverRepositoryMock.Setup(a => a.GetByIdAsync(uploadLicenseDriverPhotoDto.DeliverDriverId)).ReturnsAsync(deliverDriver);
 
-            var service = new DeliverDriverService(_awsS3ServiceMock.Object, _driverRepositoryMock.Object);
+            var service = new DeliverDriverService(_awsS3ServiceMock.Object, _driverRepositoryMock.Object, _userManagerMock.Object);
 
             var result = await service.UploadLicenseDriverPhotoAsync(uploadLicenseDriverPhotoDto);
 
