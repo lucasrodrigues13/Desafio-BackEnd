@@ -5,7 +5,6 @@ using MotorRental.Domain.Constants;
 using MotorRental.Domain.Entities;
 using MotorRental.Infrastructure.Configuration;
 using MotorRental.Infrastructure.Configurations;
-using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace MotorRental.Infrastructure.Data
 {

@@ -3,6 +3,7 @@ using Moq;
 using MotorRental.Application.Common;
 using MotorRental.Application.Interfaces;
 using MotorRental.Domain.Dtos;
+using MotorRental.Domain.Entities;
 using MotorRental.WebApi.Controllers;
 
 namespace MotorRental.Api.Tests
@@ -20,33 +21,34 @@ namespace MotorRental.Api.Tests
         public async Task Get_Should_Return_Ok()
         {
             var rentals = new List<RentalDto>
+            {
+                new RentalDto
                 {
-                    new RentalDto
-                    {
-                        Id = 1,
-                        DeliverDriverId = 1,
-                        MotorcycleId = 1,
-                        PlanId = 1,
-                        StartDate = DateTime.Now,
-                        ExpectedEndDate = DateTime.Now.AddDays(7),
-                        ExpectedPrice = 210,
-                    },
-                    new RentalDto
-                    {
-                        Id = 2,
-                        DeliverDriverId = 2,
-                        MotorcycleId = 2,
-                        PlanId = 2,
-                        StartDate = DateTime.Now,
-                        ExpectedEndDate = DateTime.Now.AddDays(15),
-                        ExpectedPrice = 420,
-                    },
-                };
+                    Id = 1,
+                    DeliverDriverId = 1,
+                    MotorcycleId = 1,
+                    PlanId = 1,
+                    StartDate = DateTime.Now,
+                    ExpectedEndDate = DateTime.Now.AddDays(7),
+                    ExpectedPrice = 210,
+                },
+                new RentalDto
+                {
+                    Id = 2,
+                    DeliverDriverId = 2,
+                    MotorcycleId = 2,
+                    PlanId = 2,
+                    StartDate = DateTime.Now,
+                    ExpectedEndDate = DateTime.Now.AddDays(15),
+                    ExpectedPrice = 420,
+                },
+            };
+
             _rentalServiceMock.Setup(a => a.Get()).ReturnsAsync(rentals);
 
             var controller = new RentalController(_rentalServiceMock.Object);
 
-            var result = controller.Get();
+            var result = await controller.Get();
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var resultValueApiResponse = Assert.IsType<ApiResponse>(okResult.Value);
@@ -55,12 +57,12 @@ namespace MotorRental.Api.Tests
         }
 
         [Fact]
-        public void Get_Should_Return_NoContent()
+        public async Task Get_Should_Return_NoContent()
         {
-            _rentalServiceMock.Setup(service => service.Get()).ReturnsAsync(new List<RentalDto>());
+            _rentalServiceMock.Setup(a => a.Get()).ReturnsAsync(new List<RentalDto>());
 
             var controller = new RentalController(_rentalServiceMock.Object);
-            var result = controller.Get();
+            var result = await controller.Get();
 
             Assert.IsType<NoContentResult>(result);
         }

@@ -43,11 +43,14 @@ namespace MotorRental.Application.Services
 
         public async Task<ApiResponse> UpdateLicensePlate(UpdateLicensePlateDto updateLicensePlateRequest)
         {
+            var motorcycle = await GetByIdAsync(updateLicensePlateRequest.MotorcycleId);
+            if (motorcycle == null)
+                return new ApiResponse(false, ErrorMessagesConstants.MOTORCYCLE_DOESNT_EXIST, null);
+
             var errors = await ValidLicensePlate(updateLicensePlateRequest.LicensePlate);
             if (errors.Any())
                 return ApiResponse.BadRequest(errors);
 
-            var motorcycle = await GetByIdAsync(updateLicensePlateRequest.MotorcycleId);
             if (motorcycle != null)
             {
                 motorcycle.LicensePlate = updateLicensePlateRequest.LicensePlate;
@@ -62,7 +65,7 @@ namespace MotorRental.Application.Services
             var errors = new List<string>();
             var motorcycleDb = await _motorcyleRepository.GetByLicensePlate(licensePlate);
 
-            if (motorcycleDb != null)
+            if (motorcycleDb.Any())
                 errors.Add(ErrorMessagesConstants.MOTORCYCLE_LICENSE_PLATE_EXISTS);
 
             return errors;

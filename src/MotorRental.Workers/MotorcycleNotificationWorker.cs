@@ -66,10 +66,10 @@ namespace MotorRental.Workers
                         motorcycle.MotorcycleNotification = new MotorcycleNotification { Motorcycle = motorcycle };
                         await motorcyleRepository.UpdateAsync(motorcycle);
                     }
-                    _logger.LogInformation("Motorcycle 2024 saved.");
+                    _logger.LogInformation($"Motorcycle {motorcycle} saved.");
                 }
                 else
-                    _logger.LogInformation("Motorcycle not saved because it is not 2024.");
+                    _logger.LogInformation($"Motorcycle {motorcycle} not saved because it is not 2024.");
 
                 _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };

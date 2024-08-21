@@ -13,7 +13,12 @@ COPY ["src/MotorRental.Infrastructure/MotorRental.Infrastructure.csproj", "src/M
 RUN dotnet restore "./src/MotorRental.WebApi/MotorRental.WebApi.csproj"
 COPY . .
 WORKDIR "/src/src/MotorRental.WebApi"
-RUN dotnet build "./MotorRental.WebApi.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+RUN dotnet build "MotorRental.WebApi.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+
+FROM build AS migrations
+RUN dotnet tool install --version 8.0.7 --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+ENTRYPOINT dotnet-ef database update --project "/src/src/MotorRental.Infrastructure/" --startup-project "/src/src/MotorRental.WebApi"
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

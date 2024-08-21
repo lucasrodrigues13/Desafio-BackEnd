@@ -17,13 +17,14 @@
 
         public const string START_DATE_REQUIRED_INVALID = "The motorcycle rental start date is required and must be from today.";
 
+        public const string MOTORCYCLE_DOESNT_EXIST = "The reported motorcycle does not exists.";
         public const string NO_MOTORCYCLE_AVAILABLE = "There is no motorcycle available.";
         public const string MOTORCYCLE_RENT_ACTIVE = "The motorcycle have a rent active.";
         public const string MOTORCYCLE_LICENSE_PLATE_EXISTS = "The vehicle license plate already exists.";
 
         public const string PLAN_NOT_REGISTERED = "The selected plan is not registered.";
 
-        public const string RENTAL_DOESNT_EXIST = "The reported rent does not exist.";
+        public const string RENTAL_DOESNT_EXIST = "The reported rent does not exists.";
 
         public const string ROLE_DOESNT_EXIST = "The role reported does not exist.";
     }
